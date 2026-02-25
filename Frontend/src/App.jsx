@@ -10,7 +10,7 @@ function App() {
 
              // Fetching data from the backend API
  function datapower(){
-     axios.get("http://localhost:3000/api/notes")
+     axios.get("https://full-stack-basic.onrender.com/api/notes")
     .then((res) => {
    // console.log(res.data)
     setAlldata(res.data.Note)
@@ -30,7 +30,7 @@ function App() {
   const {title,description} = e.target.elements;
   //console.log(title.value,description.value)
   
-  axios.post("http://localhost:3000/api/notes",{
+  axios.post("https://full-stack-basic.onrender.com/api/notes",{
     title:title.value,
     description:description.value
   }).then((res) => {
@@ -43,7 +43,7 @@ function App() {
 
       //delete a note by its id and sending the delete request to the backend API
 function handleDelete(id){
-  axios.delete(`http://localhost:3000/api/notes/${id}`)
+  axios.delete(`https://full-stack-basic.onrender.com/api/notes/${id}`)
   .then((res) => {
    // console.log(res.data);
     datapower()
@@ -56,7 +56,7 @@ function UpdateNote(id){
 
   setTitle("")// ye dono update note ka hai
   setDescription("")// ye dono update note ka hai
-  axios.patch(`http://localhost:3000/api/notes/${id}`,{
+  axios.patch(`https://full-stack-basic.onrender.com/api/notes/${id}`,{
     title:title,
     description:description
   }).then((res) => {
