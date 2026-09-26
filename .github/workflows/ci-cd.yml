@@ -1,0 +1,36 @@
+name: TODO - CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install frontend dependencies
+        working-directory: Frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: Frontend
+        run: npm run build
+
+      - name: Clean backend public
+        run: |
+          rm -rf Backend/public/*
+          mkdir -p Backend/public
+
+      - name: Copy frontend build to backend public
+        run: |
+          cp -r Frontend/dist/. Backend/public/
+
+      - name: Deploy to Render
+        run: curl -X POST "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
